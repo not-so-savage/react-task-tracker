@@ -5,7 +5,10 @@ function Task({ id, text, date, reminder, onDelete, onToggle }) {
     return (
         <div className={`task ${reminder ? 'reminder' : ''}`} onDoubleClick={() => onToggle(id)}>
             <h3>
-                {text} <FaTimes style={{color: 'red', cursor: 'pointer'}} onClick={() => onDelete(id)}/>
+                {text} <FaTimes
+                    style={{color: 'red', cursor: 'pointer'}}
+                    onClick={() => onDelete(id)}
+                />
             </h3>
             <p>{date}</p>
         </div>

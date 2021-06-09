@@ -10,7 +10,7 @@
       "id": 3,
       "text": "Win the lottery",
       "date": "July 5th at 8:00pm",
-      "reminder": false
+      "reminder": true
     },
     {
       "text": "Play the Pyramid Stage",
@@ -21,7 +21,7 @@
     {
       "text": "Buy a dog",
       "date": "July 6th at 12:00pm",
-      "reminder": false,
+      "reminder": true,
       "id": 5
     }
   ]
