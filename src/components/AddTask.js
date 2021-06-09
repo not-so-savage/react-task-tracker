@@ -42,7 +42,7 @@ function AddTask({ onAdd }) {
 }
 
 AddTask.propTypes = {
-    addTask: PropTypes.func.isRequired,
+    onAdd: PropTypes.func.isRequired,
 }
 
 export default AddTask
