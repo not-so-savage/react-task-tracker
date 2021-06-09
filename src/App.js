@@ -1,48 +1,61 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 
 function App() {
   const [showAddTask, setShowAddTask] = useState(false)
-  const [tasks, setTasks] = useState([
-    {
-        id: 1,
-        text: 'Play the Pyramid Stage',
-        date: 'June 28th at 4:00pm',
-        reminder: false,
-    },
-    {
-      id: 2,
-      text: 'Go to the gym',
-      date: 'June 29th at 5:00pm',
-      reminder: true,
-    },
-    {
-      id: 3,
-      text: 'Win the lottery',
-      date: 'July 5th at 8:00pm',
-      reminder: false,
+  const [tasks, setTasks] = useState([])
+
+  useEffect(() => {
+    const getTasks = async () => {
+      const tasksFromServer = await fetchTasks()
+      setTasks(tasksFromServer)
     }
-])
 
-const addTask = (task) => {
-  const id = Math.floor(Math.random() * 10000) + 1
-  const newTask = { id, ...task }
-  setTasks([...tasks, newTask])
-}
+    getTasks()
+  }, [])
 
-const deleteTask = (id) => {
-  setTasks(tasks.filter((task) => task.id !== id))
-}
+  const fetchTasks = async () => {
+    const res = await fetch('http://localhost:5000/tasks')
+    const data = await res.json()
 
-const toggleAddTask = () => {
-  setShowAddTask(!showAddTask)
-}
+    return data
+  }
 
-const toggleReminder = (id) => {
-  setTasks(tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task))
-}
+  const addTask = async (task) => {
+    const res = await fetch('http://localhost:5000/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    })
+    
+    const data = await res.json()
+
+    setTasks([...tasks, data])
+
+    // const id = Math.floor(Math.random() * 10000) + 1
+    // const newTask = { id, ...task }
+    // setTasks([...tasks, newTask])
+  }
+
+  const deleteTask = async (id) => {
+    await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'DELETE'
+    })
+
+    setTasks(tasks.filter((task) => task.id !== id))
+  }
+
+  const toggleAddTask = () => {
+    setShowAddTask(!showAddTask)
+  }
+
+  const toggleReminder = (id) => {
+    setTasks(tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task))
+  }
 
   return (
     <div className="container">

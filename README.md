@@ -19,6 +19,10 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `npm run server`
+
+Runs the mock JSON server for use in development. Chek db.json to see the data it serves up.
+
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
